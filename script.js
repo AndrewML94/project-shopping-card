@@ -66,14 +66,13 @@ const getIdFromProductItem = (product) => product.querySelector('.item_id').inne
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `
-  ${title} - ${id}
-  
-  R$${price}.`;
+  li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
+  li.addEventListener('click', (event) => event.target.remove());
   return li;
 };
 
 const itemsSection = document.querySelector('.items');
+const cartOl = document.querySelector('.cart__items');
 
 const showcase = async () => {
   await fetchProducts('computador').then(({ results }) => {
@@ -83,19 +82,17 @@ const showcase = async () => {
   });
 };
 
-const cartOl = document.querySelector('.cart__items');
-
 const captureId = async (element) => {
   cartOl.append(createCartItemElement(await
     fetchItem(getIdFromProductItem(element.target.parentNode))));
 };
 
-const shoppingCart = async () => {
+const shoppingCart = () => {
   const shoppingCartBtn = document.querySelectorAll('.item__add');
   shoppingCartBtn.forEach((btn) => btn.addEventListener('click', captureId));
 };
 
 window.onload = async () => {
   await showcase();
-  await shoppingCart();
+  shoppingCart();
 };
