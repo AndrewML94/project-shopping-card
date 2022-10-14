@@ -1,6 +1,5 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
-// experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
-
+// experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 
 /**
@@ -54,7 +53,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  * @param {Element} product - Elemento do produto.
  * @returns {string} ID do produto.
  */
-const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
+const getIdFromProductItem = (product) => product.querySelector('.item_id').innerText;
 
 /**
  * Função responsável por criar e retornar um item do carrinho.
@@ -67,9 +66,36 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.innerText = `
+  ${title} - ${id}
+  
+  R$${price}.`;
   return li;
 };
 
-window.onload = () => { };
+const itemsSection = document.querySelector('.items');
+
+const showcase = async () => {
+  await fetchProducts('computador').then(({ results }) => {
+    results.forEach((element) => {
+      itemsSection.appendChild(createProductItemElement(element));
+    });
+  });
+};
+
+const cartOl = document.querySelector('.cart__items');
+
+const captureId = async (element) => {
+  cartOl.append(createCartItemElement(await
+    fetchItem(getIdFromProductItem(element.target.parentNode))));
+};
+
+const shoppingCart = async () => {
+  const shoppingCartBtn = document.querySelectorAll('.item__add');
+  shoppingCartBtn.forEach((btn) => btn.addEventListener('click', captureId));
+};
+
+window.onload = async () => {
+  await showcase();
+  await shoppingCart();
+};
