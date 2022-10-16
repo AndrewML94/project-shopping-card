@@ -99,7 +99,7 @@ const shoppingCart = () => {
 
 const restoreShoppingCart = () => {
   if (localStorage.getItem('cartItems')) {
-    const result = getSavedCartItems();
+    const result = JSON.parse(getSavedCartItems());
     result.forEach((a) => {
       const li = document.createElement('li');
       li.innerText = a;
