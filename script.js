@@ -1,5 +1,6 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
-// experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
+// experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
+
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 
 /**
@@ -7,7 +8,7 @@
  * @param {string} imageSource - URL da imagem.
  * @returns {Element} Elemento de imagem do produto.
  */
-const createProductImageElement = (imageSource) => {
+ const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
@@ -64,8 +65,8 @@ const getIdFromProductItem = (product) => product.querySelector('.item_id').inne
  * @returns {Element} Elemento de um item do carrinho.
  */
 
-const cartOl = document.querySelector('.cart__items');
-const productsInCart = [];
+ const cartOl = document.querySelector('.cart__items');
+ const productsInCart = [];
 
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
@@ -96,10 +97,20 @@ const shoppingCart = () => {
   shoppingCartBtn.forEach((btn) => btn.addEventListener('click', captureId));
 };
 
+const restoreShoppingCart = () => {
+  if (localStorage.getItem('cacheKey')) {
+    const result = getSavedCartItems();
+    result.forEach((a) => {
+      const li = document.createElement('li');
+      li.innerText = a;
+      cartOl.appendChild(li);
+      li.addEventListener('click', () => cartOl.removeChild(li));
+    });
+  }
+};
+
 window.onload = async () => {
   await showcase();
   shoppingCart();
-  if (localStorage.getItem('cacheKey')) {
-    cartOl.append(getSavedCartItems());
-  }
+  restoreShoppingCart();
 };
