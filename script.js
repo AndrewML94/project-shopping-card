@@ -98,7 +98,7 @@ const shoppingCart = () => {
 };
 
 const restoreShoppingCart = () => {
-  if (localStorage.getItem('cacheKey')) {
+  if (localStorage.getItem('cartItems')) {
     const result = getSavedCartItems();
     result.forEach((a) => {
       const li = document.createElement('li');
