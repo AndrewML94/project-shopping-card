@@ -109,8 +109,17 @@ const restoreShoppingCart = () => {
   }
 };
 
+const clearButton = () => {
+  const clearBtn = document.querySelector('.empty-cart');
+  clearBtn.addEventListener('click', () => {
+    cartOl.innerHTML = '';
+    localStorage.clear();
+  });
+};
+
 window.onload = async () => {
   await showcase();
   shoppingCart();
   restoreShoppingCart();
+  clearButton();
 };
