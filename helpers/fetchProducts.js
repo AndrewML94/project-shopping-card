@@ -4,7 +4,7 @@ const fetchProducts = async (id) => {
     const data = await promise.json();
     return data;
   } catch (error) {
-    throw new Error(`Algo não está funcionando como deveria :( ${error}`);
+    throw new Error('You must provide an url');
   }
 };
 
