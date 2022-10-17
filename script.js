@@ -8,7 +8,7 @@
  * @param {string} imageSource - URL da imagem.
  * @returns {Element} Elemento de imagem do produto.
  */
- const createProductImageElement = (imageSource) => {
+const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
@@ -65,8 +65,9 @@ const getIdFromProductItem = (product) => product.querySelector('.item_id').inne
  * @returns {Element} Elemento de um item do carrinho.
  */
 
- const cartOl = document.querySelector('.cart__items');
- const productsInCart = [];
+const itemsSection = document.querySelector('.items');
+const cartOl = document.querySelector('.cart__items');
+const productsInCart = [];
 
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
@@ -78,13 +79,18 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 
+const removeLoading = () => {
+  const pLoading = document.querySelector('.loading');
+  itemsSection.removeChild(pLoading);
+};
+
 const showcase = async () => {
-  const itemsSection = document.querySelector('.items');
   await fetchProducts('computador').then(({ results }) => {
     results.forEach((element) => {
       itemsSection.appendChild(createProductItemElement(element));
     });
   });
+  removeLoading();
 };
 
 const captureId = async (element) => {
